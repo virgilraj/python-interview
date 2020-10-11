@@ -25,5 +25,7 @@ def longest_sub_with_zeroandone(arr):
 
 
 if __name__ == "__main__":
-    arr = [ 0, 0, 1, 1, 1, 0, 0]
+    #arr = [ 0, 0, 1, 1, 1, 0, 0]
+    #arr = [ 1, 1, 1, 0, 0, 1, 1]
+    arr = [ 1, 1, 0, 0, 1, 1, 0, 1, 1]
     longest_sub_with_zeroandone(arr)

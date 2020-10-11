@@ -7,6 +7,7 @@ def get_column_name(n):
         print(index, ord('A'))
         print(chr(index + ord('A')))        
         res += chr(index + ord('A'))
+        print(res)
         n = (n-1)//26
         print(res[::-1])
 

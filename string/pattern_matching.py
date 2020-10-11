@@ -47,10 +47,19 @@ def find_one_string_rotation_of_nother(txt1, txt2):
     txt = txt1 + txt2
     kmp_search(txt, txt2)
 
+def my_approach(txt, pat):
+    m = len(pat)
+    n = len(txt) - m
+
+    for i in range(n):
+        if txt[i:m+i] == pat:
+            print("Match found!!!")
+
 if __name__ == "__main__":
     pat = "abcaby"
     #lps = [0, 0, 0, 1, 2, 0]
     txt = "AABAACAADAABAABA"
-    pat = "AABA"
+    pat = "AABAX"
     #kmp_search(txt, pat)
     find_one_string_rotation_of_nother('mypencil', 'encilmyp')
+    my_approach(txt, pat)

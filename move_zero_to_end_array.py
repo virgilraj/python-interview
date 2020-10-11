@@ -27,11 +27,12 @@ def move_zero_to_end_array_sliding(arr):
     while(right < n):
         if(arr[right] != 0):
             arr[right],arr[left] = arr[left], arr[right]
+            print(arr)
             left +=1
         right +=1
     print(arr)
 
 if __name__ == "__main__":
     arr = [6, 0, 8, 2, 3, 0, 4, 0, 1]
-    move_zero_to_end_array(arr)
+    #move_zero_to_end_array(arr)
     move_zero_to_end_array_sliding(arr)

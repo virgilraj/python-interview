@@ -22,7 +22,29 @@ def longest_consecutve_integer_subarray(arr):
             
     print("nLongest Consecutive Sub Array length ", max_len)       
 
+def myapproach(arr):
+    n = len(arr)
+    max_len = float('-inf')
+    s = 0
+    e = 0
+    ms = 0
+    me =0
+
+    for i in range(1,n):
+        if abs(arr[i] - arr[i-1]) == 1:
+            e = i+1
+        else:
+            s = i
+            e = i
+        #print(s,e)
+        if max_len < e-s:
+            max_len = e-s
+            ms = s
+            me = e
+    print(max_len , arr[ms:me])
 if __name__ == "__main__":
     #arr = [ -2, -1, -13,  4, -1, 2,1, -5, 4]
     arr = [ 4, 6, 0, 2, 1, 3, 10, 8, 11 ]
     longest_consecutve_integer_subarray(arr)
+    #arr = [4,5,1,2,3,6,7]
+    myapproach(arr)

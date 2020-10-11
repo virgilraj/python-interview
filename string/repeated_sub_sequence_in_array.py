@@ -21,6 +21,7 @@ def repeated_sub_sequence(S):
 	# and discard all non-repeating elements (frequency 1)
 
     repeated = [c for c in S if freq.get(c) >= 2]
+    print(repeated)
     print("Has repeated sub sequence", not is_palindrome(repeated))
 
 def is_palindrome(A):
@@ -34,5 +35,7 @@ def is_palindrome(A):
 
 if __name__ == "__main__":
 
-    S = "XYBYAXB"
+    #S = "XYBYAXB"
+    S = "MADAM"
+    S = "XYBABYX"
     repeated_sub_sequence(S)

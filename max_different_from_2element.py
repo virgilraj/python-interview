@@ -10,7 +10,9 @@ def max_difference(arr):
 
 def max_difference_kadence(arr):
     diff = 0 
+    minval = float('inf')
     max_so_far = float('-inf')
+    maxval = float('-inf')
     n = len(arr)
 
     #for i in reversed(range(n-1)):
@@ -24,10 +26,16 @@ def max_difference_kadence(arr):
         else:
             diff = max(diff, abs(max_so_far - arr[i]))
 
-    print("Diff", diff)
+        
+        minval = min(minval, arr[i])
+        maxval = max(maxval, arr[i])
 
+
+    print("Diff", diff, maxval - minval)
+
+        
 
 if __name__ == "__main__":
-    A = [2, 7, 9, 5, 1, 3, 5]
+    A = [2, 7, 9, 5, 1, 3, 5, 12]
     max_difference(A)
     max_difference_kadence(A)

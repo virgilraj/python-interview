@@ -16,7 +16,7 @@ def kanpsack_fraction(Cap, W, Val, n):
     for i in range(len(W)):
         obj = {'weight' : W[i], 'Val': Val[i], 'ratio': Val[i]/W[i] }
         lst.append(obj)
-    lst.sort(key=lambda x: x['ratio'])
+    lst.sort(key=lambda x: x['ratio'], reverse=True)
 
     curweight = 0
     finalval = 0

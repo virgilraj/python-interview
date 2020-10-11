@@ -70,5 +70,5 @@ if __name__ == "__main__":
     arr = [ 3, 4, -7, 3, 1, 3, 1, -4, -2, -2 ]
     #brute_force(arr, 4)
     findSum(arr,0)
-    other_approach(arr,4)
+    other_approach(arr,0)
     

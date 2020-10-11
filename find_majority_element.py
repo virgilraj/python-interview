@@ -21,4 +21,5 @@ def find_majority_element(arr):
 
 if __name__ == "__main__":
     A = [1, 8, 7, 4, 1, 2, 2, 2, 2, 2, 2]
+    A = [2,2,3,4,5]
     find_majority_element(A)

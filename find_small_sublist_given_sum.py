@@ -10,9 +10,10 @@ def find_small_sublist_given_sum(arr, k):
         while win_sum > k and left <= right:
             print(length, right-left+1)
             length = min(length, right-left+1)
-
             win_sum -= arr[left]
+            
             left +=1
+            print("sum", win_sum, left)
     
 
     print("Min length", length)
@@ -21,5 +22,6 @@ def find_small_sublist_given_sum(arr, k):
 
 
 if __name__ == "__main__":
-    arr = [ 3, 4, -7, 3, 1, 3, 1, -4, -2, -2 ]
-    find_small_sublist_given_sum(arr, 7)
+    #arr = [ 3, 4, -7, 3, 1, 3, 1, -4, -2, -2 ]
+    arr = [ 1,3,2,4,5,1,1 ]
+    find_small_sublist_given_sum(arr, 4)

@@ -17,4 +17,4 @@ for i in range(n):
         #print(prevSum[k]) 
     
     
-#print(prevSum)
+print(prevSum)
