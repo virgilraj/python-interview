@@ -17,7 +17,7 @@ def combination_util(arr, data, start, end, index, r):
     # remaining elements at remaining positions
     #i = start
     for i in range(start,end):
-        print(end - i, r-index)
+        #print(end - i, r-index)
         if(end-i >= r- index):
             data[index] = arr[i]
             combination_util(arr, data, i+1, end, index+1, r)     

@@ -27,8 +27,10 @@ def merge_two_sorted_array(X, Y):
 
 
 if __name__ == "__main__":
-    X = [1, 4, 7, 8, 10]
-    Y = [2, 3, 9 ]
+    #X = [1, 4, 7, 8, 10]
+    X = [1,2,7]
+    Y = [3,4,5]
+    #Y = [2, 3, 9 ]
     merge_two_sorted_array(X,Y)
     print("X:", X)
     print("Y:", Y)
