@@ -32,8 +32,8 @@ def equilibrium_index_approach(arr):
 
 
 if __name__ == "__main__":
-    A = [0, -3, 5, -4, -2, 3, 1]
-    #A = [1, 2, 6, 4, 0, -1]
+    #A = [0, -3, 5, -4, -2, 3, 1]
+    A = [1, 2, 6, 4, 0, -1]
     #A = [1, 2, 6, 4, 0, -1 ]
     equilibrium_index(A)
     equilibrium_index_approach(A)

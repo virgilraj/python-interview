@@ -60,15 +60,16 @@ def other_approach(A, sum):
 		# if current window's sum is equal to the given sum
 		if windowSum == sum:
 			print("Sublist found", (low, high - 1))
-			return
+			#return
 
 		# At this point the current window's sum is more than the given sum
 		# remove current element (leftmost element) from the window
 		windowSum -= A[low]
 
 if __name__ == "__main__":
-    arr = [ 3, 4, -7, 3, 1, 3, 1, -4, -2, -2 ]
+    #arr = [ 3, 4, -7, 3, 1, 3, 1, -4, -2, -2 ]
+    arr = [ 3, 4, 7, 2,  5, -3 ]
     #brute_force(arr, 4)
-    findSum(arr,0)
-    other_approach(arr,0)
+    findSum(arr,7)
+    other_approach(arr,7)
     
