@@ -20,7 +20,7 @@ sc = SparkSession.builder.appName("CokeBatch")\
     .getOrCreate()
 
 
-bkt = 'my-vehicle'
+bkt = batchutil.get_bucket()
 
 def process():
     s3path = 'landing/'

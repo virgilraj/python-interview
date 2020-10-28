@@ -10,6 +10,7 @@ import shutil
 from tempfile import TemporaryFile
 
 _S3_CONNECTION_ = None
+__BUCKET__ = None
 
 def get_s3_connection(): 
     # Create the connection if not already there 
@@ -86,3 +87,12 @@ def remove_out_file():
     shutil.rmtree('temp', ignore_errors=True)
     os.mkdir('temp')
     print('Removed all temp & out files')
+
+def get_bucket():
+    global __BUCKET__
+    if(__BUCKET__ == None):
+        with open('../../config.json') as f:
+            data = json.load(f)
+            __BUCKET__ = data['bucket']
+    return __BUCKET__
+    
