@@ -145,7 +145,7 @@ def upload_scriptfile_to_s3(file):
     data = data.replace('[[bucket]]', BUCKET)
     fin.close()
 
-    s3.Object(BUCKET, 'src/tt_'+filename).put(Body=data)
+    s3.Object(BUCKET, 'src/'+filename).put(Body=data)
     return 's3://'+ BUCKET +'/src/'+filename
 
 def create_glue_job(jobname, scriptlocation, args=None, connections = None, dpus=5, 
