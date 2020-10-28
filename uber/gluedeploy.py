@@ -6,7 +6,7 @@ from os import path, listdir, getcwd
 from botocore.exceptions import ClientError
 
 _GLUE_CONNECTION_ = None
-
+__BUCKET__ = None
 '''
 Utility function to get the glue Connection
 '''
@@ -18,6 +18,14 @@ def get_glue_connection():
         _GLUE_CONNECTION_ = boto3.client('glue','us-east-1')
         
     return _GLUE_CONNECTION_ 
+
+def get_bucket():
+    global __BUCKET__
+    if(__BUCKET__ == None):
+        with open('config.json') as f:
+            data = json.load(f)
+            __BUCKET__ = data['bucket']
+    return __BUCKET__
 
 ''' 
 Reads a deployment descriptor from a python source file
@@ -130,22 +138,34 @@ def deploy_glue_job(jobname, descriptor, enable_metrics=False, maxretries=None):
 def upload_scriptfile_to_s3(file):
     filename = ''.join(path.splitext(path.basename(file)))
     s3 = boto3.resource('s3')
-    BUCKET = "cdsatemp"
-    s3.Bucket(BUCKET).upload_file(file, "virgil/src/"+filename)
-    return 's3://cdsatemp/virgil/src/'+filename
+    BUCKET = get_bucket()
+
+    fin = open(file, "rt")
+    data = fin.read()
+    data = data.replace('[[bucket]]', BUCKET)
+    fin.close()
+
+    s3.Object(BUCKET, 'src/tt_'+filename).put(Body=data)
+    return 's3://'+ BUCKET +'/src/'+filename
 
 def create_glue_job(jobname, scriptlocation, args=None, connections = None, dpus=5, 
                     max_concurrent=1, max_retries=1, enable_metrics=False):
     conn = get_glue_connection()
-    loguri = 's3://cdsatemp/virgil/log/' + jobname
+    BUCKET = get_bucket()
+    loguri = 's3://'+ BUCKET +'/log/' + jobname
     glueversion = '2.0'
     pythonversion='3'
+    argscopy = {}
+    if args is not None:
+        for a in args: 
+            argscopy[a] = args[a]
 
     response = conn.create_job(
             Name=jobname,
             Description='Glue Job',
             LogUri=loguri,
             Role='AWSGlueServiceRole',
+            DefaultArguments=argscopy,
             ExecutionProperty={
                 'MaxConcurrentRuns': 2
             },
@@ -167,7 +187,8 @@ def create_glue_job(jobname, scriptlocation, args=None, connections = None, dpus
 def update_glue_job(jobname, scriptlocation, args=None, connections = None, dpus=5, 
                     max_concurrent=1, max_retries=1, enable_metrics=False):
     conn = get_glue_connection()
-    loguri = 's3://cdsatemp/virgil/log/' + jobname
+    BUCKET = get_bucket()
+    loguri = 's3://'+ BUCKET +'/log/' + jobname
     glueversion = '2.0'
     pythonversion='3'
     argscopy = {}
@@ -235,6 +256,4 @@ if __name__ == "__main__":
                 seript_loc = upload_scriptfile_to_s3(file)
                 deploy_local_glue_job(file,seript_loc)
 
-    #read_deployment_descriptor_from_py_file()
-    #glue = get_glue_connection()
-    #print(glue)
+    

@@ -31,10 +31,10 @@ sc = SparkSession.builder.appName("CokeBatch")\
 sqlContext = SQLContext(sc)
 
 
-bkt = 'cdsatemp'
+bkt = 'my-vehicle'
 
 def process():
-    s3path = 'virgil/stage/'
+    s3path = 'stage/'
     all_files = batchutil.list_keys(bkt, s3path)
     
     for filename in all_files:
@@ -49,7 +49,7 @@ def process():
 
 
 def spark_process():
-    s3path = 'virgil/core'
+    s3path = 'core/'
     job_id = str(uuid.uuid1())
     print(job_id)
     ti = datetime.datetime.fromtimestamp(int(round(time.time())))

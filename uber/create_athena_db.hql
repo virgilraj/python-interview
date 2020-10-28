@@ -1,3 +1,3 @@
 
 
-CREATE DATABASE test_virgil;
+CREATE DATABASE myvehicle;

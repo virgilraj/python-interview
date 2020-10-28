@@ -20,10 +20,10 @@ sc = SparkSession.builder.appName("CokeBatch")\
     .getOrCreate()
 
 
-bkt = 'cdsatemp'
+bkt = 'my-vehicle'
 
 def process():
-    s3path = 'virgil/landing/'
+    s3path = 'landing/'
     
     all_files = batchutil.list_keys(bkt, s3path)
     
@@ -37,7 +37,7 @@ def process():
                 batchutil.delete_from_temp(is_saved[1])
 
 def spark_process(file):
-    s3path = 'virgil/stage'
+    s3path = 'stage/'
     job_id = str(uuid.uuid1())
     ti = datetime.datetime.fromtimestamp(int(round(time.time())))
     print('start spark ::' + file)

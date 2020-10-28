@@ -1,8 +1,8 @@
 
 
-DROP TABLE IF EXISTS test_virgil.landing_vehicle;
+DROP TABLE IF EXISTS myvehicle.landing_vehicle;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS test_virgil.landing_vehicle
+CREATE EXTERNAL TABLE IF NOT EXISTS myvehicle.landing_vehicle
 (
 	vehicle_id	STRING,
     function_id	STRING,
@@ -16,5 +16,5 @@ WITH SERDEPROPERTIES(
 	'escapeChar' = '\''
 )
 STORED AS TEXTFILE
-LOCATION "s3://cdsatemp/virgil/landing"
+LOCATION "s3://[[bucket]]/landing"
 TBLPROPERTIES ("serialization.null.format"="","classification"="csv");

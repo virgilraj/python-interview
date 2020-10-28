@@ -2,7 +2,9 @@ import logging
 import argparse
 import time
 import boto3
+import json
 _ATHENA_CONNECTION_ = None
+__BUCKET__ = None
 
 ''' 
 Get the athena connection
@@ -16,6 +18,16 @@ def get_athena_connection():
         _ATHENA_CONNECTION_ = boto3.client('athena', 'us-east-1')
         
     return _ATHENA_CONNECTION_    
+
+
+def get_bucket():
+    global __BUCKET__
+    if(__BUCKET__ == None):
+        with open('config.json') as f:
+            data = json.load(f)
+            __BUCKET__ = data['bucket']
+    return __BUCKET__
+
 
 '''
 Reads SQL statements from a file 
@@ -92,9 +104,11 @@ Executes a single SQL statement
 def execute_statement(statement): 
  
     client = get_athena_connection()
+    bkt = get_bucket()
+    statement = statement.replace('[[bucket]]', bkt)
 
     print('Executing SQL: \'' + statement + '\'')
-    result = client.start_query_execution(QueryString=statement, ResultConfiguration={'OutputLocation':'s3://cdsatemp/temp' })
+    result = client.start_query_execution(QueryString=statement, ResultConfiguration={'OutputLocation':'s3://my-vehicle/temp' })
     id = result['QueryExecutionId']
     
     while True: 

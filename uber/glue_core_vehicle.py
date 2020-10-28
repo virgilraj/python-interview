@@ -25,14 +25,21 @@ glueContext = GlueContext(SparkContext.getOrCreate())
 sqlcontext = SQLContext(glueContext.spark_session)
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME', 'WRITE_MODE'])
-db="test_virgil"
+db="myvehicle"
 table_name="stage_vehicle"
    
 
-df = glueContext.create_dynamic_frame.from_catalog(
-             database=db,
-             table_name=table_name)
+df = glueContext.create_dynamic_frame_from_options(
+      connection_type = "s3", 
+      connection_options = {
+          "paths": ["s3://[[bucket]]/stage/"],
+          "recurse" : True,
+      },
+      format = "parquet")
+    
+
 df = df.toDF()
+df = df.filter(df.record_day >= datetime.datetime.today().strftime("%Y-%m-%d"))
 
 sqlcontext.registerDataFrameAsTable(df, 'stage_vehicle')
 
@@ -75,11 +82,15 @@ df = sqlcontext.sql(sql)
 
 df = df.withColumn('job_dtm', F.lit(datetime.datetime.fromtimestamp(int(round(time.time())))))
 df = df.withColumn('job_id', F.lit(args['JOB_ID']))
+df = df.withColumn('record_day', F.lit(datetime.datetime.today().strftime("%Y-%m-%d")))
 print ("Count: ", df.count())
 df.printSchema()
 df.show(5)
+if df.count() > 0:
+    df.write.mode(args['WRITE_MODE']).format('parquet').save('s3://[[bucket]]/core/record_day=' + datetime.datetime.today().strftime("%Y-%m-%d"))
+    print('Job completed successfully')
+else:
+    print('No records found')
 
-df.write.mode(args['WRITE_MODE']).format('parquet').save('s3://cdsatemp/virgil/core')
 
-print('Job completed successfully')
 

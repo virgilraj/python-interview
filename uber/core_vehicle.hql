@@ -1,8 +1,8 @@
 
 
-DROP TABLE IF EXISTS test_virgil.core_vehicle;
+DROP TABLE IF EXISTS myvehicle.core_vehicle;
 
-CREATE EXTERNAL TABLE IF NOT EXISTS test_virgil.core_vehicle
+CREATE EXTERNAL TABLE IF NOT EXISTS myvehicle.core_vehicle
 (
 	vehicle_id	STRING,
     function_id	STRING,
@@ -11,6 +11,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS test_virgil.core_vehicle
 	job_dtm timestamp,
 	job_id STRING
 )
+PARTITIONED BY (record_day DATE)
 STORED AS PARQUET
-LOCATION "s3://cdsatemp/virgil/core"
+LOCATION "s3://[[bucket]]/core"
 TBLPROPERTIES ("classification"="parquet");
+MSCK REPAIR TABLE myvehicle.core_vehicle;
